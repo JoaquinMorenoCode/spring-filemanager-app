@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+  <h1>Please Sign up</h1>
+
+  <form method="POST" enctype="multipart/form-data" th:object="${user}"  th:action="@{/user/signup}" action="#">
+    <div>
+      <input type="text" name="username" placeholder="Username" th:field="*{username}"/>
+    </div>
+    <div>
+      <input type="password" name="password" placeholder="Password" th:field="*{password}"/>
+    </div>
+    <input type="submit" value="Log in" />
+  </form>
+</body>
+</html>
