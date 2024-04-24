@@ -7,11 +7,10 @@ import moreno.joaquin.filemanagerapp.model.UserDTO;
 import moreno.joaquin.filemanagerapp.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.AuthenticationProvider;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -38,6 +37,10 @@ public class UserService {
         userRepository.save(newUser);
 
 
+    }
+
+    public Optional<User> getUser(String username){
+       return userRepository.findByUsername(username);
     }
 
 

@@ -1,6 +1,7 @@
 package moreno.joaquin.filemanagerapp.controller;
 
 import jakarta.persistence.GeneratedValue;
+import moreno.joaquin.filemanagerapp.model.User;
 import moreno.joaquin.filemanagerapp.model.UserDTO;
 import moreno.joaquin.filemanagerapp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,9 +9,13 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping({"/user"})
@@ -39,7 +44,30 @@ public class LoginController {
     }
 
     @PostMapping("/signup")
-    public String PostSignUp(UserDTO user){
+    public String postSignUp(@Validated @ModelAttribute("user") UserDTO user, BindingResult bindingResult, Model model, RedirectAttributes ra){
+
+        if(userService.getUser(user.getUsername()).isPresent()){
+            bindingResult.rejectValue("username","DuplicateUsername");
+        }
+
+        if(!user.getPassword().equals(user.getConfirmPassword())){
+            bindingResult.rejectValue("confirmPassword","PasswordMissmatch","Passwords do not match.");
+            model.addAttribute("user", user);
+
+            return "signup";
+
+        }
+
+
+        //Return validation errors
+        if(bindingResult.hasErrors()){
+            model.addAttribute("user", user);
+            return "signup";
+        }
+
+
+
+//        User userToSave = User.builder().username(user.getUsername()).password(user.getPassword()).build();
 
         userService.createUser(user);
 

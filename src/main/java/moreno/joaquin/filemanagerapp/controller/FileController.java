@@ -40,7 +40,7 @@ public class FileController {
     @GetMapping({""})
     public String listAllFiles(Model model) throws IOException{
         //Empty Model for Form
-            model.addAttribute("fileItem", FileItem.builder().build());
+//            model.addAttribute("fileItem", FileItem.builder().build());
 
 
         List<FileItem> fileItems = fileItemService.getFiles();
@@ -69,6 +69,16 @@ public class FileController {
         model.addAttribute("files", fileItems);
         model.addAttribute("imageResource", imageUrls);
         model.addAttribute("fileResource", fileUrls);
+
+
+        return  "index";
+    }
+
+    @GetMapping({"/upload"})
+    public String uploadFile(Model model) throws IOException{
+        //Empty Model for Form
+        model.addAttribute("fileItem", FileItem.builder().build());
+
 
 
         return  "uploadFileForm";
@@ -110,7 +120,7 @@ public class FileController {
 
     }
 
-    @PostMapping("")
+    @PostMapping("/upload")
     public String handleFileUpload(@Validated @ModelAttribute FileItem fileItem,BindingResult bindingResult , Model model, RedirectAttributes ra ){
         if(fileItem.getFile().isEmpty()){
             bindingResult.rejectValue("file","MultipartNotEmpty");
@@ -119,13 +129,11 @@ public class FileController {
             bindingResult.rejectValue("file","MultipartDuplicateFile");
             return "uploadFileForm";
 
-
         }
 
         if(!fileItem.getImage().isEmpty() && !fileItem.getImage().getContentType().startsWith("image/")){
             bindingResult.rejectValue("image","MultipartInvalidFile");
             return "uploadFileForm";
-
         }
 
 
@@ -135,14 +143,12 @@ public class FileController {
                 bindingResult.rejectValue("version","TypeMissmatch");
             return "uploadFileForm";
 
-
         }
 
 
         if(bindingResult.hasErrors()){
             model.addAttribute("fileItem", fileItem);
             return "uploadFileForm";
-
         }
 
         fileItemService.saveFileItem(fileItem);

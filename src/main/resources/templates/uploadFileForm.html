@@ -40,46 +40,6 @@
 </div>
 
 
-    <div th:if="${files}"  th:each="file,iter : ${files}">
-<!--      <a th:href="${file}" th:text="${file}" />-->
-        <div class="card mb-2" style="max-width: 100%;">
-            <div class="row g-0">
-                <div  class="col-md-4">
-
-                        <img th:if="${file.imageFilename ==null}" th:src="@{/images/default-thumbnail.jpg}"  class="img-fluid rounded-start  overflow-hidden" alt="...">
-                        <img th:if="${file.imageFilename !=null}"  th:src="${imageResource[iter.index]}" class="img-fluid rounded-start overflow-hidden  " alt="...">
-                </div>
-
-                <div class="col-md-8">
-                    <div class="card-body">
-                        <h5   class="card-title d-flex">File:&nbsp   <a th:href="${fileResource[iter.index]}"  th:text="${file.filename}" /></h5>
-                        <p class="card-text d-flex">Author:&nbsp  <a class="card-text"   th:text="${file.author}"/> </p>
-                        <p class="card-text d-flex">Version:&nbsp   <a class="card-text"   th:text="${file.version}"/>  </p>
-                        <p class="card-text d-flex">Creation Date:&nbsp  <a class="card-text"   th:text="${file.creationDate}" /> </p>
-                        <p class="card-text d-flex">Update Date:&nbsp   <a class="card-text"   th:text="${file.updateDate}" /> </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-    </div>
-    <div th:if="${files.isEmpty()}">
-
-        <div class="d-flex align-items-center justify-content-center vh-100">
-        <div class="">
-            <h2>No files found. Sorry about that.</h2>
-            <h3 class="text-center">Try uploading some.</h3>
-            <div class="text-center">
-                <form action="#" th:action="@{/files}">
-                    <input class="btn btn-primary" type="submit" value="Home"/>
-                </form>
-            </div>
-        </div>
-    </div>
-    </div>
-
-
-
 
 
 

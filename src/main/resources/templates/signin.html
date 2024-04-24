@@ -8,7 +8,7 @@
 <body>
 <div class="vh-100 ">
 <div class="d-flex align-items-center justify-content-center vh-100">
-  <div class="card p-5">
+  <div class="card w-25 p-5">
 <h1>Welcome</h1>
 
 <form  method="POST"   th:action="@{'/login'}">
@@ -24,13 +24,15 @@
     <input type="checkbox" class="form-check-input" id="rememberme">
     <label class="form-check-label" for="rememberme">Remember me</label>
   </div>
+
+  <div class="text-center pt-3">
   <button type="submit" class="btn btn-primary">Sign In</button>
 
-  <div class="form-group p-1 d-flex">
+  <div class="form-group pt-2">
     <label for="signup">Not registered yet?</label>
     <p><a  id="signup" class="ps-1 link-opacity-50-hover" href="/user/signup">Sign up</a></p>
   </div>
-
+  </div>
 </form>
   </div>
 </div>
