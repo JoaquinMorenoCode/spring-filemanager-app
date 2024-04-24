@@ -39,12 +39,18 @@ public class SecurityConfig   {
                 .authorizeHttpRequests(rq -> {
             rq.requestMatchers("/home/**").permitAll();
             rq.requestMatchers("/user/**").permitAll();
+            rq.requestMatchers("/").permitAll();
             rq.requestMatchers("/files/**").authenticated();
+
             rq.anyRequest().authenticated();
 
 
 
         });
+
+//        http.rememberMe(key ->{
+//            key.rememberMeParameter("rememberme").tokenValiditySeconds(20).key("supersecretkey");
+//        });
 
 //        http.exceptionHandling((Customizer<ExceptionHandlingConfigurer<HttpSecurity>>) new LoginUrlAuthenticationEntryPoint("/files"));
         http.authenticationProvider(authenticationProvider);

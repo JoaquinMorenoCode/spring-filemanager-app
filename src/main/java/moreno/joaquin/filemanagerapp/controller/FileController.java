@@ -85,13 +85,13 @@ public class FileController {
     }
 
     @GetMapping("/update/{id}")
-    public String handleUpdateForm(@PathVariable Long id, Model model, RedirectAttributes ra){
+    public String handleUpdateForm(@PathVariable Long id, Model model){
 
         Optional<FileItem> fileToUpdate = fileItemService.getFileItem(id);
 
         if(fileToUpdate.isEmpty()){
 
-            ra.addFlashAttribute("message", "File with Id " + id + " does not exist");
+
             return "redirect:/files";
 
         }
