@@ -98,7 +98,7 @@ public class FileController {
 
         model.addAttribute("fileItem", fileToUpdate.get());
         //model.addAttribute("message", fileToUpdate.get().getId());
-
+        System.out.println(fileToUpdate.get());
         return "editFileForm";
 
 
@@ -174,10 +174,19 @@ public class FileController {
                 bindingResult.rejectValue("file", "MultipartDuplicateFile");
                 return "editFileForm";
             }
-            //need to use storage service
-            fileToUpdate.get().setFile((fileItem.getFile()));
+
+            fileToUpdate.get().setFile(fileItem.getFile());
+
 
         }
+//        //If file or Image not been updated
+//        if(fileItem.getFile().isEmpty()){
+//            fileToUpdate.get().setFilename(fileToUpdate.get().getFilename()); //this crashes if casting
+//        }
+//        if(fileItem.getImage().isEmpty()){
+//            fileToUpdate.get().setImageFilename(fileToUpdate.get().getImageFilename()); //this crashes if casting
+//        }
+
         if(!fileItem.getImage().isEmpty()){
             //Check Image Type
             if(!fileItem.getImage().getContentType().startsWith("image/")){
@@ -186,6 +195,7 @@ public class FileController {
 
             }
             fileToUpdate.get().setImage((fileItem.getImage()));
+            fileToUpdate.get().setImageFilename(null);
         }
 
 

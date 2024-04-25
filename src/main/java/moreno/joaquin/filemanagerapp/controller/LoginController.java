@@ -1,6 +1,8 @@
 package moreno.joaquin.filemanagerapp.controller;
 
 import jakarta.persistence.GeneratedValue;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import moreno.joaquin.filemanagerapp.model.User;
 import moreno.joaquin.filemanagerapp.model.UserDTO;
 import moreno.joaquin.filemanagerapp.service.UserService;
@@ -9,10 +11,12 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.annotation.CurrentSecurityContext;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.WebAttributes;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -49,14 +53,23 @@ public class LoginController {
     }
 
     @GetMapping("/signin")
-    public String getSingIn(Model model, @CurrentSecurityContext(expression="authentication?.name")
+    public String getSingIn( Model model, @CurrentSecurityContext(expression="authentication?.name")
     String currentUser){
-
+        //Redirect logged in users
         if(!currentUser.equals("anonymousUser")){
                return "redirect:/files ";
         }
 
-
+//        HttpSession session = request.getSession(false);
+//        String errorMessage = null;
+//        if (session != null) {
+//            AuthenticationException ex = (AuthenticationException) session
+//                    .getAttribute(WebAttributes.AUTHENTICATION_EXCEPTION);
+//            if (ex != null) {
+//                errorMessage = ex.getMessage();
+//            }
+//        }
+//        model.addAttribute("errorMessage", errorMessage);
 
 
         model.addAttribute("user", UserDTO.builder().build());

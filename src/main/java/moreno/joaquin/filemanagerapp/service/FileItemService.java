@@ -26,22 +26,24 @@ public class FileItemService {
 
 
     public FileItem saveFileItem(FileItem fileItem){
+        //Null Image
         if(fileItem.getImage() == null && fileItem.getImageFilename() == null){
-            fileItem.setImageFilename(null);
-        }else{
-            if(!fileItem.getImage().isEmpty()) {
-                //Store Thumbnail
-                    if(fileItem.getImage().getContentType().startsWith("image/")) {
+            fileItem.setImageFilename(null);}
+        else if(fileItem.getImage()!=null && !fileItem.getImage().isEmpty()){
+//                if(!fileItem.getImage().isEmpty()) {
+                    //Store Thumbnail
+                    if (fileItem.getImage().getContentType().startsWith("image/")) {
                         fileSystemStorageService.store(fileItem.getImage(), 1);
                         //Set Image Filename
                         String imageFilename = fileItem.getImage().getOriginalFilename();
                         fileItem.setImageFilename(imageFilename);
-                    }else{
+                    } else {
                         throw new StorageException("Invalid File");
                     }
 
 
-            }
+//                }
+//
 
         }
         //Store File
